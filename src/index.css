@@ -4,6 +4,7 @@
   --text-color: #0d0d0d;
   --transition: all ease-in-out 0.3s;
 }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,17 +13,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html, body, #root {
+
+html,
+body,
+#root {
   height: 100%;
 }
-*, *:before, *:after {
+
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
+
 .auth {
   display: flex;
   align-items: center;
   height: 100%;
 }
+
 .card {
   background: #fff;
   padding: 3rem;
@@ -32,24 +41,32 @@ html, body, #root {
   width: 90%;
   margin: 0 auto;
 }
+
 .inputWrapper {
   margin: 1rem auto;
   width: 100%;
 }
-input:not([type='checkbox']), button {
+
+input:not([type='checkbox']),
+button {
   border-radius: 0.5rem;
   width: 100%;
 }
-input:not([type='checkbox']), textarea {
+
+input:not([type='checkbox']),
+textarea {
   border: 2px solid rgba(0, 0, 0, 0.1);
   padding: 1em;
   color: var(--text-color);
   transition: var(--transition);
 }
-input:not([type='checkbox']):focus, textarea:focus {
+
+input:not([type='checkbox']):focus,
+textarea:focus {
   outline: none;
   border-color: var(--primary-color);
 }
+
 button {
   appearance: none;
   border: 1px solid var(--primary-color);
@@ -63,14 +80,18 @@ button {
   box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.1);
   transition: var(--transition);
 }
+
 button.secondary {
   color: var(--primary-color);
   background-color: #fff;
   border-color: #fff;
 }
-button:hover, button:focus {
+
+button:hover,
+button:focus {
   box-shadow: 1px 6px 8px rgba(0, 0, 0, 0.1);
 }
+
 .error {
   margin: 0;
   margin-top: 0.2em;
@@ -78,53 +99,67 @@ button:hover, button:focus {
   color: var(--error-color);
   animation: 0.3s ease-in-out forwards fadeIn;
 }
+
 .two-cols {
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
 }
+
 .two-cols .left {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   height: 100%;
   overflow-y: scroll;
 }
+
 .two-cols .right {
   overflow-y: auto;
 }
+
 .title {
   font-size: 1.3rem;
 }
+
 .subtitle {
   font-size: 0.9rem;
   opacity: 0.85;
 }
-.title, .subtitle {
+
+.title,
+.subtitle {
   margin: 0;
 }
+
 .diary-tile {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1em;
 }
+
 .editor {
   height: 100%;
   padding: 1em;
 }
+
 .editor input {
   width: 100%;
 }
+
 .editor textarea {
   width: 100%;
   height: calc(100vh - 160px);
 }
+
 .entries ul {
   list-style: none;
   padding: 0;
 }
+
 .entries li {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0.5em;
   cursor: pointer;
 }
+
 .entries li:nth-child(even) {
   background: rgba(0, 0, 0, 0.1);
 }
@@ -133,14 +168,17 @@ button:hover, button:focus {
   .two-cols .left {
     width: 25%;
   }
+
   .two-cols .right {
     width: 75%;
   }
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 0.8;
   }

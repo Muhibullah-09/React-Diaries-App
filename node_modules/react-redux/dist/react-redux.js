@@ -1614,13 +1614,13 @@
 	        // Distinguish between actual "data" props that were passed to the wrapper component,
 	        // and values needed to control behavior (forwarded refs, alternate context instances).
 	        // To maintain the wrapperProps object reference, memoize this destructuring.
-	        var reactReduxForwardedRef = props.reactReduxForwardedRef,
-	            wrapperProps = _objectWithoutPropertiesLoose(props, ["reactReduxForwardedRef"]);
+	        var forwardedRef = props.forwardedRef,
+	            wrapperProps = _objectWithoutPropertiesLoose(props, ["forwardedRef"]);
 
-	        return [props.context, reactReduxForwardedRef, wrapperProps];
+	        return [props.context, forwardedRef, wrapperProps];
 	      }, [props]),
 	          propsContext = _useMemo[0],
-	          reactReduxForwardedRef = _useMemo[1],
+	          forwardedRef = _useMemo[1],
 	          wrapperProps = _useMemo[2];
 
 	      var ContextToUse = React.useMemo(function () {
@@ -1723,9 +1723,9 @@
 
 	      var renderedWrappedComponent = React.useMemo(function () {
 	        return React__default.createElement(WrappedComponent, _extends({}, actualChildProps, {
-	          ref: reactReduxForwardedRef
+	          ref: forwardedRef
 	        }));
-	      }, [reactReduxForwardedRef, WrappedComponent, actualChildProps]); // If React sees the exact same element reference as last time, it bails out of re-rendering
+	      }, [forwardedRef, WrappedComponent, actualChildProps]); // If React sees the exact same element reference as last time, it bails out of re-rendering
 	      // that child, same as if it was wrapped in React.memo() or returned false from shouldComponentUpdate.
 
 	      var renderedChild = React.useMemo(function () {
@@ -1751,7 +1751,7 @@
 	    if (forwardRef) {
 	      var forwarded = React__default.forwardRef(function forwardConnectRef(props, ref) {
 	        return React__default.createElement(Connect, _extends({}, props, {
-	          reactReduxForwardedRef: ref
+	          forwardedRef: ref
 	        }));
 	      });
 	      forwarded.displayName = displayName;
@@ -2287,14 +2287,12 @@
 	  }, [store, contextSub]);
 	  var latestSubscriptionCallbackError = React.useRef();
 	  var latestSelector = React.useRef();
-	  var latestStoreState = React.useRef();
 	  var latestSelectedState = React.useRef();
-	  var storeState = store.getState();
 	  var selectedState;
 
 	  try {
-	    if (selector !== latestSelector.current || storeState !== latestStoreState.current || latestSubscriptionCallbackError.current) {
-	      selectedState = selector(storeState);
+	    if (selector !== latestSelector.current || latestSubscriptionCallbackError.current) {
+	      selectedState = selector(store.getState());
 	    } else {
 	      selectedState = latestSelectedState.current;
 	    }
@@ -2308,7 +2306,6 @@
 
 	  useIsomorphicLayoutEffect(function () {
 	    latestSelector.current = selector;
-	    latestStoreState.current = storeState;
 	    latestSelectedState.current = selectedState;
 	    latestSubscriptionCallbackError.current = undefined;
 	  });
@@ -2330,7 +2327,7 @@
 	        latestSubscriptionCallbackError.current = err;
 	      }
 
-	      forceRender();
+	      forceRender({});
 	    }
 
 	    subscription.onStateChange = checkForUpdates;
@@ -2364,16 +2361,14 @@
 	    }
 
 	    if ( !selector) {
-	      throw new Error("You must pass a selector to useSelector");
+	      throw new Error("You must pass a selector to useSelectors");
 	    }
 
 	    var _useReduxContext = useReduxContext$1(),
 	        store = _useReduxContext.store,
 	        contextSub = _useReduxContext.subscription;
 
-	    var selectedState = useSelectorWithStoreAndSubscription(selector, equalityFn, store, contextSub);
-	    React.useDebugValue(selectedState);
-	    return selectedState;
+	    return useSelectorWithStoreAndSubscription(selector, equalityFn, store, contextSub);
 	  };
 	}
 	/**
