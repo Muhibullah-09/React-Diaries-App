@@ -11,14 +11,17 @@ import { showAlert } from '../../util';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 
+
 interface Props {
   diary: Diary;
-}
+};
+
 
 const buttonStyle: React.CSSProperties = {
   fontSize: '0.7em',
   margin: '0 0.5em',
 };
+
 
 const DiaryTile: FC<Props> = (props) => {
   const [diary, setDiary] = useState(props.diary);
@@ -71,7 +74,6 @@ const DiaryTile: FC<Props> = (props) => {
         )}
       </h2>
       <p className="subtitle">{totalEntries ?? '0'} saved entries</p>
-
       <div style={{ display: 'flex' }}>
         <button
           style={buttonStyle}
@@ -94,3 +96,10 @@ const DiaryTile: FC<Props> = (props) => {
 };
 
 export default DiaryTile;
+// In this file, we receive a diary object as a prop and display the data in our component. 
+// Notice that we use local state and component props for our data display here. That’s because 
+// you don’t have to manage all your app’s state using Redux. Sharing data using props, and 
+// maintaining local state in your components is acceptable and encouraged in some cases.
+// Next, let’s create a component that will display a list of a diary’s entries, with the last 
+// updated entries at the top of the list. Ensure you are in the src/features/diary directory, 
+// then create a file named DiaryEntriesList.tsx and add the following code to the file:

@@ -5,14 +5,13 @@ import { Entry } from '../../../interfaces/entry.interface';
 import dayjs from 'dayjs';
 import { User } from '../../../interfaces/user.interface';
 
+
 export const create = (
   schema: any,
   req: Request
 ): { user: User; diary: Diary } | Response => {
   try {
-    const { title, type, userId } = JSON.parse(req.requestBody) as Partial<
-      Diary
-    >;
+    const { title, type, userId } = JSON.parse(req.requestBody) as Partial<Diary>;
     const exUser = schema.users.findBy({ id: userId });
     if (!exUser) {
       return handleErrors(null, 'No such user exists.');
@@ -34,6 +33,7 @@ export const create = (
     return handleErrors(error, 'Failed to create Diary.');
   }
 };
+
 
 export const addEntry = (
   schema: any,
@@ -62,6 +62,7 @@ export const addEntry = (
   }
 };
 
+
 export const getDiaries = (schema: any, req: Request): Diary[] | Response => {
   try {
     const user = schema.users.find(req.params.id);
@@ -70,6 +71,7 @@ export const getDiaries = (schema: any, req: Request): Diary[] | Response => {
     return handleErrors(error, 'Could not get user diaries.');
   }
 };
+
 
 export const getEntries = (
   schema: any,
@@ -82,6 +84,7 @@ export const getEntries = (
     return handleErrors(error, 'Failed to get Diary entries.');
   }
 };
+
 
 export const updateDiary = (schema: any, req: Request): Diary | Response => {
   try {
@@ -98,6 +101,7 @@ export const updateDiary = (schema: any, req: Request): Diary | Response => {
   }
 };
 
+
 export const updateEntry = (schema: any, req: Request): Entry | Response => {
   try {
     const entry = schema.entries.find(req.params.id);
@@ -112,3 +116,11 @@ export const updateEntry = (schema: any, req: Request): Entry | Response => {
     return handleErrors(error, 'Failed to update entry.');
   }
 };
+// In this file, we have exported methods for working with the Diary and Entry models. In the create method, 
+// we call a method named user.createDiary() to save a new diary and associate it to a user account.
+// The addEntry and updateEntry methods create and correctly associate a new entry to a diary or update 
+// an existing entry’s data respectively. The latter also updates the entry’s updatedAt property with the 
+// current timestamp. The updateDiary method also updates a diary with the timestamp the change was made. Later, 
+// we’ll be sorting the records we receive from our network request with this property.
+// We also have a getDiaries method which retrieves a user’s diaries and a getEntries methods which 
+// retrieves a selected diary’s entries.

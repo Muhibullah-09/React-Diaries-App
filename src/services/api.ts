@@ -1,12 +1,11 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { showAlert } from '../util';
 
+
 const http: AxiosInstance = axios.create({
   baseURL: 'https://diaries.app',
 });
-
 http.defaults.headers.post['Content-Type'] = 'application/json';
-
 http.interceptors.response.use(
   async (response: AxiosResponse): Promise<any> => {
     if (response.status >= 200 && response.status < 300) {
@@ -31,4 +30,8 @@ http.interceptors.response.use(
   }
 );
 
+
 export default http;
+// In this file, we are exporting an Axios instance modified to include our app’s API url, 
+// https://diaries.app. We have configured an interceptor to handle success and error responses, 
+// and we display error messages using a sweetalert toast which we will configure in the next step.

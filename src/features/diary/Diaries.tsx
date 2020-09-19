@@ -100,3 +100,7 @@ const Diaries: FC = () => {
 };
 
 export default Diaries;
+// In this component, we have a function to fetch the user’s diaries inside a useEffect hook, 
+// and a function to create a new diary. We also render our components in react-router’s <Route /> 
+// component, rendering a diary’s entries if its id matches the path param in the route /diary/:id, 
+// or otherwise rendering a list of the user’s diaries.

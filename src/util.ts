@@ -24,3 +24,6 @@ export const showAlert = (
     },
   });
 };
+// This file exports a function that displays a toast whenever it is invoked. 
+// The function accepts parameters to allow you set the toast message and type. For example, 
+// we are showing an error toast in the Axios response error interceptor like this:

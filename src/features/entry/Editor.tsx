@@ -11,6 +11,7 @@ import { updateEntry } from './entriesSlice';
 import { showAlert } from '../../util';
 import { useAppDispatch } from '../../store';
 
+
 const Editor: FC = () => {
   const { currentlyEditing: entry, canEdit, activeDiaryId } = useSelector(
     (state: RootState) => state.editor
@@ -24,8 +25,7 @@ const Editor: FC = () => {
       return showAlert('Please select a diary.', 'warning');
     }
     if (entry == null) {
-      http
-        .post<Entry, { diary: Diary; entry: Entry }>(
+      http.post<Entry, { diary: Diary; entry: Entry }>(
           `/diaries/entry/${activeDiaryId}`,
           editedEntry
         )
@@ -37,8 +37,7 @@ const Editor: FC = () => {
           }
         });
     } else {
-      http
-        .put<Entry, Entry>(`diaries/entry/${entry.id}`, editedEntry)
+      http.put<Entry, Entry>(`diaries/entry/${entry.id}`, editedEntry)
         .then((_entry) => {
           if (_entry != null) {
             dispatch(setCurrentlyEditing(_entry));
@@ -52,6 +51,7 @@ const Editor: FC = () => {
   useEffect(() => {
     updateEditedEntry(entry);
   }, [entry]);
+
 
   return (
     <div className="editor">
@@ -68,10 +68,7 @@ const Editor: FC = () => {
         {entry && !canEdit ? (
           <h4>
             {entry.title}
-            <a
-              href="#edit"
-              onClick={(e) => {
-                e.preventDefault();
+            <a href="#edit" onClick={(e) => { e.preventDefault();
                 if (entry != null) {
                   dispatch(setCanEdit(true));
                 }
@@ -133,3 +130,14 @@ const Editor: FC = () => {
 };
 
 export default Editor;
+// Let’s break down what’s happening in the Editor component.
+// First, we are picking some values (with correctly inferred types) from the app’s state using the useSelector() 
+// hook from react-redux. In the next line, we have a stateful value called editedEntry whose initial value is 
+// set to the editor.currentlyEditing property we’ve selected from the store.
+// Next, we have the saveEntry function which updates or creates a new entry in the API, and dispatches 
+// the respective Redux action.
+// Finally, we have a useEffect that is fired when the editor.currentlyEditing property changes. 
+// Our editor’s UI (in the component’s return function) has been set up to respond to changes in the state. 
+// For example, rendering the entry’s content as JSX elements when the user isn’t editing.
+// With that, the app’s Entry feature should be completely set up. In the next section, we will 
+// finish building the Diary feature and then import the main components in the Home component we created earlier.

@@ -8,6 +8,7 @@ import { setUser } from './userSlice';
 import { AuthResponse } from '../../services/mirage/routes/user';
 import { useAppDispatch } from '../../store';
 
+
 const schema = Yup.object().shape({
   username: Yup.string()
     .required('What? No username?')
@@ -15,6 +16,7 @@ const schema = Yup.object().shape({
   password: Yup.string().required('Without a password, "None shall pass!"'),
   email: Yup.string().email('Please provide a valid email address (abc@xy.z)'),
 });
+
 
 const Auth: FC = () => {
   const { handleSubmit, register, errors } = useForm<User>({
@@ -27,9 +29,8 @@ const Auth: FC = () => {
 
   const submitForm = (data: User) => {
     const path = isLogin ? '/auth/login' : '/auth/signup';
-    http
-      .post<User, AuthResponse>(path, data)
-      .then((res) => {
+    http.post<User, AuthResponse>(path, data)
+       .then((res) => {
         if (res) {
           const { user, token } = res;
           dispatch(saveToken(token));
@@ -45,15 +46,15 @@ const Auth: FC = () => {
       });
   };
 
+
   return (
     <div className="auth">
       <div className="card">
         <form onSubmit={handleSubmit(submitForm)}>
+
           <div className="inputWrapper">
             <input ref={register} name="username" placeholder="Username" />
-            {errors && errors.username && (
-              <p className="error">{errors.username.message}</p>
-            )}
+            {errors && errors.username && (<p className="error">{errors.username.message}</p>)}
           </div>
 
           <div className="inputWrapper">
@@ -63,9 +64,7 @@ const Auth: FC = () => {
               type="password"
               placeholder="Password"
             />
-            {errors && errors.password && (
-              <p className="error">{errors.password.message}</p>
-            )}
+            {errors && errors.password && (<p className="error">{errors.password.message}</p>)}
           </div>
 
           {!isLogin && (
@@ -75,9 +74,7 @@ const Auth: FC = () => {
                 name="email"
                 placeholder="Email (optional)"
               />
-              {errors && errors.email && (
-                <p className="error">{errors.email.message}</p>
-              )}
+              {errors && errors.email && (<p className="error">{errors.email.message}</p>)}
             </div>
           )}
 
@@ -87,12 +84,10 @@ const Auth: FC = () => {
             </button>
           </div>
 
-          <p
-            onClick={() => setIsLogin(!isLogin)}
-            style={{ cursor: 'pointer', opacity: 0.7 }}
-          >
+          <p onClick={() => setIsLogin(!isLogin)} style={{ cursor: 'pointer', opacity: 0.7 }}>
             {isLogin ? 'No account? Create one' : 'Already have an account?'}
           </p>
+
         </form>
       </div>
     </div>
@@ -100,3 +95,7 @@ const Auth: FC = () => {
 };
 
 export default Auth;
+// In this component, we have set up a form for users to log in, or to create an account. 
+// Our form fields are validated using Yup and, on successfully authenticating a user, we use our 
+// useAppDispatch hook to dispatch the relevant actions. You can see the dispatched actions and the 
+// changes made to your state in the Redux DevTools Extension:
