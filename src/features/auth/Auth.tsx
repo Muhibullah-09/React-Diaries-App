@@ -50,6 +50,7 @@ const Auth: FC = () => {
   return (
     <div className="auth">
       <div className="card">
+        <h2>Login/SignUp</h2>
         <form onSubmit={handleSubmit(submitForm)}>
 
           <div className="inputWrapper">
